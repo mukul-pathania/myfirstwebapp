@@ -5,7 +5,7 @@ def hello() -> str:
     return 'Hello world from Flask!'
 @app.route('/search4')
 def do_search() -> str:
-    return str(set('life, the universe, and everything').intersection('eiru,!'))
+    return str(set('life, the universe, and everything').intersection(set('eiru,!')))
 @app.route('/entry')
 def entry_page() -> 'html':
     return render_template('entry.html',
