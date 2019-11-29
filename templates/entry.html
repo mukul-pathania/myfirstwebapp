@@ -7,8 +7,8 @@
 <form method='POST' action='/search4'>
 <table>
 <p>Use this form to submit a search request:</p>
-<tr><td>Phrase:</td><td><input name='phrase' type='TEXT' width='60'></td></tr>
-<tr><td>Letters:</td><td><input name='letters' type='TEXT' value='aeiou'></td></tr>
+<tr><td>Phrase:</td><td><input name='phrase' type='TEXT' width='60' placeholder = "Add the phrase here." required minlength = "3" maxlength = "15"></td></tr>
+<tr><td>Letters:</td><td><input name='letters' type='TEXT' required placeholder = "Add some letters here to be searched for." minlength = "3" maxlength = "15"></td></tr>
 </table>
 <p>When you're ready, click this button:</p>
 <p><input value='Do it!' type='SUBMIT'></p>
