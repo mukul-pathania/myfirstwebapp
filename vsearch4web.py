@@ -6,6 +6,7 @@ def hello():
 @app.route('/search4', methods = ["POST","GET"])
 def do_search():
     return str(set(request.form["phrase"]).intersection(set(request.form["letters"])))
+
 @app.route('/entry')
 def entry_page():
     return render_template('entry.html',
