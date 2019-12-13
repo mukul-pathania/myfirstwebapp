@@ -1,12 +1,24 @@
-from flask import Flask, render_template, request
-import mysql.connector
+from flask import Flask, render_template, request, session
 from DBcm import UseDatabase
+from checker import check_logged_in
+
+
 
 app = Flask(__name__)
 app.config["dbconfig"] = { 'host': '127.0.0.1',
                  'user': 'vsearch',
                  'password': 'vsearchpasswd',
                  'database': 'vsearchlogDB', }
+@app.route("/login")
+def do_login() -> str:
+    session["logged_in"] = True
+    return "You are now logged in."
+
+@app.route("/logout")
+def do_logout() -> str:
+    session.pop("logged_in")
+    return "You are now logged out."
+
 
 def log_request(req: 'flask_request', res: str) -> None:
     """Log details of the web request and the results."""
@@ -23,6 +35,7 @@ def log_request(req: 'flask_request', res: str) -> None:
              res, ))
     
 @app.route('/viewlog')
+@check_logged_in
 def view_the_log() -> "html":
     with UseDatabase(app.config["dbconfig"]) as cursor:
         _SQL = """select phrase, letters, ip, browser_string,
@@ -53,5 +66,7 @@ def do_search():
 def entry_page():
     return render_template('entry.html',
                             the_title='Welcome to search4letters on the web!')
+app.secret_key = "I don't know what it is"
+    
 if __name__ == "__main__" :
     app.run(debug=True)
